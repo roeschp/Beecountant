@@ -7,11 +7,8 @@ namespace Accountant.Objects
 {
     public static class ObjectManager
     {
-        // Connect to ComboBox in Main
         public static Action<string>? CustomerChanged;
-
         private static List<ProductObject> ProductList;
-
         private static List<CustomerObject> CustomerList = new List<CustomerObject>();
         private static CustomerObject Customer;
 
@@ -29,6 +26,18 @@ namespace Accountant.Objects
 
                 if(!string.IsNullOrEmpty(tCustomer.CompanyName))
                     CustomerChanged?.Invoke(tCustomer.CompanyName);
+            }
+        }
+
+        public static CustomerObject? GetCustomerObject()
+        {
+            if(Customer != null)
+            {
+                return Customer;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -74,14 +83,12 @@ namespace Accountant.Objects
             return ProductList;
         }
 
-        public static void CreateFile(List<ProductObject> tProductObjectList)
+        public static void CreateFile(OrderObject tOrderObject)
         {
             if(Customer != null)
             {
-                WordCreater.CreateWord(Customer, tProductObjectList);
+                WordCreater.CreateWord(Customer, tOrderObject);
             }
-            
         }
-        
     }
 }

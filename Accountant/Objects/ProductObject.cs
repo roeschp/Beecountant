@@ -7,7 +7,9 @@ namespace Accountant.Objects
         public Product? Name;
         public string? Weight;
         public string? Unit;
-        public double? Price;
+        public double? SinglePrice;
+        public double? SubTotal;
+        public int? Count;
         public Selection? Selection;
 
         public ProductObject()
@@ -15,7 +17,9 @@ namespace Accountant.Objects
             Name = null;
             Weight = null; 
             Unit = null;
-            Price = null;
+            SinglePrice = null;
+            SubTotal = null;
+            Count = null;
             Selection = null;
         }
     }

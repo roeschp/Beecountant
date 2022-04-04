@@ -6,7 +6,6 @@ namespace Accountant.Forms
     public static class FormManager
     {
         public static Action<Control>? SelectionClosed;
-
         private static List<ProductObject> ProductList = new List<ProductObject>();
 
         public static void CustomerInputClosed(Control tControl)

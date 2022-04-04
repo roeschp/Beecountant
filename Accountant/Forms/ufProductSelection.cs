@@ -30,9 +30,16 @@ namespace Accountant
 
         public ProductObject GetProduct()
         {
-            CurrentProduct.Weight = cbUnit.Text;
-            CurrentProduct.Price = Convert.ToDouble(txtTotalProductPrice.Text);
-            // Add Other properties
+            if(Enum.TryParse(cbProducts.Text, true, out Product aProduct))
+            {
+                CurrentProduct.Name = aProduct;
+                CurrentProduct.Weight = cbUnit.Text;
+                CurrentProduct.Unit = lbUnit.Text;
+                CurrentProduct.Count = Convert.ToInt16(nrProductCount.Value);
+                CurrentProduct.SinglePrice = Convert.ToDouble(txtSingleProductPrice.Text);
+                CurrentProduct.SubTotal = Convert.ToDouble(txtTotalProductPrice.Text);
+            };
+
             return CurrentProduct;
         }
 
@@ -68,21 +75,22 @@ namespace Accountant
             {
                 case Selection.Multi:
                     {
-                        HoneyCapacity capacity = new HoneyCapacity();
-                        Type aStructType = typeof(HoneyCapacity);
+                        Capacity capa = new Capacity();
+                        Type aStructType = typeof(Capacity);
                         var aFields = aStructType.GetFields();
 
                         cbUnit.Items.Clear();
 
                         foreach (var aField in aFields)
                         {
-                            cbUnit.Items.Add(string.Format($"{aField.GetValue(capacity)}"));
+                            cbUnit.Items.Add(string.Format($"{aField.GetValue(capa)}"));
                         }
 
                         if (cbUnit.Items.Count > 0)
                             cbUnit.SelectedIndex = 0;
 
-                        lbUnit.Text = CurrentProduct.Unit;
+                        if(CurrentProduct != null)
+                            lbUnit.Text = CurrentProduct.Unit;
 
                         break;
                     }
@@ -100,8 +108,8 @@ namespace Accountant
             {
                 cbUnit.Items.Clear();
 
-                if (CurrentProduct.Price != null)
-                    txtSingleProductPrice.Text = CurrentProduct.Price.ToString();
+                if (CurrentProduct.SinglePrice != null)
+                    txtSingleProductPrice.Text = CurrentProduct.SinglePrice.ToString();
 
                 if (CurrentProduct.Weight != null)
                 {
@@ -124,8 +132,8 @@ namespace Accountant
                 
                 if (aProduct != null)
                 {
-                    txtSingleProductPrice.Text = aProduct.Price.ToString();
-                    txtTotalProductPrice.Text = aProduct.Price.ToString();
+                    txtSingleProductPrice.Text = Math.Round((double)aProduct.SinglePrice, 2).ToString();
+                    txtTotalProductPrice.Text = Math.Round((double)aProduct.SinglePrice, 2).ToString();
                 }
             }
 
@@ -137,7 +145,7 @@ namespace Accountant
             {
                 double aProductPrice = Convert.ToDouble(txtSingleProductPrice.Text);
                 var aTotalProductPrice = aProductPrice * (int)nrProductCount.Value;
-                txtTotalProductPrice.Text = aTotalProductPrice.ToString();
+                txtTotalProductPrice.Text = Math.Round((double)aTotalProductPrice, 2).ToString();
             }
         }
     }

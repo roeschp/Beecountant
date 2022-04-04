@@ -13,12 +13,14 @@ namespace Accountant.Util
         public static string CustomerListFolder = "CustomerList";
         public static string CustomerListName = "CustomerList.json";
 
+        public static double TaxesFactor = 1.095;
+
         public static string PathExecutable = Path.GetDirectoryName(Application.ExecutablePath);
 
 
         public enum Product
         {
-            Tannehonig,
+            Tannenhonig,
             Waldhonig,
             Kastanienhonig,
             Lindenhonig,
@@ -35,10 +37,16 @@ namespace Accountant.Util
             Single
         }
 
-        public struct HoneyCapacity
+        public struct Capacity
         {
-            public int HoneyBig = 500;
-            public int HoneySmall = 250;
+            public int big;
+            public int small;
+
+            public Capacity()
+            {
+                big = 500;
+                small = 250;
+            }
         }
     }
 }

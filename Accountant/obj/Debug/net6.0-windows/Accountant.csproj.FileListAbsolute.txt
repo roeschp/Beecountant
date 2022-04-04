@@ -25,7 +25,6 @@ C:\src\Accountant\Accountant\bin\Debug\net6.0-windows\Accountant.exe
 C:\src\Accountant\Accountant\bin\Debug\net6.0-windows\Accountant.deps.json
 C:\src\Accountant\Accountant\bin\Debug\net6.0-windows\Accountant.runtimeconfig.json
 C:\src\Accountant\Accountant\bin\Debug\net6.0-windows\Accountant.dll
-C:\src\Accountant\Accountant\bin\Debug\net6.0-windows\ref\Accountant.dll
 C:\src\Accountant\Accountant\bin\Debug\net6.0-windows\Accountant.pdb
 C:\src\Accountant\Accountant\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 C:\src\Accountant\Accountant\obj\Debug\net6.0-windows\Accountant.csproj.AssemblyReference.cache
@@ -44,3 +43,6 @@ C:\src\Accountant\Accountant\obj\Debug\net6.0-windows\Accountant.dll
 C:\src\Accountant\Accountant\obj\Debug\net6.0-windows\ref\Accountant.dll
 C:\src\Accountant\Accountant\obj\Debug\net6.0-windows\Accountant.pdb
 C:\src\Accountant\Accountant\obj\Debug\net6.0-windows\Accountant.genruntimeconfig.cache
+C:\src\Accountant\Accountant\obj\Debug\net6.0-windows\refint\Accountant.dll
+C:\src\Accountant\Accountant\obj\Debug\net6.0-windows\Accountant.Forms.SettingForm.resources
+C:\src\Accountant\Accountant\obj\Debug\net6.0-windows\Accountant.Properties.Resources.resources
