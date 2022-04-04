@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnAddProduct = new System.Windows.Forms.Button();
             this.cbCustomer = new System.Windows.Forms.ComboBox();
             this.lbCustomerSelection = new System.Windows.Forms.Label();
@@ -52,19 +53,20 @@
             // 
             // btnAddProduct
             // 
-            this.btnAddProduct.Location = new System.Drawing.Point(15, 40);
+            this.btnAddProduct.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddProduct.BackgroundImage")));
+            this.btnAddProduct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnAddProduct.Location = new System.Drawing.Point(15, 18);
             this.btnAddProduct.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddProduct.Name = "btnAddProduct";
-            this.btnAddProduct.Size = new System.Drawing.Size(86, 20);
+            this.btnAddProduct.Size = new System.Drawing.Size(46, 44);
             this.btnAddProduct.TabIndex = 0;
-            this.btnAddProduct.Text = "Add Product";
             this.btnAddProduct.UseVisualStyleBackColor = true;
             this.btnAddProduct.Click += new System.EventHandler(this.btnAddInvoice_Click);
             // 
             // cbCustomer
             // 
             this.cbCustomer.FormattingEnabled = true;
-            this.cbCustomer.Location = new System.Drawing.Point(170, 37);
+            this.cbCustomer.Location = new System.Drawing.Point(257, 37);
             this.cbCustomer.Margin = new System.Windows.Forms.Padding(2);
             this.cbCustomer.Name = "cbCustomer";
             this.cbCustomer.Size = new System.Drawing.Size(129, 23);
@@ -74,12 +76,13 @@
             // lbCustomerSelection
             // 
             this.lbCustomerSelection.AutoSize = true;
-            this.lbCustomerSelection.Location = new System.Drawing.Point(170, 7);
+            this.lbCustomerSelection.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbCustomerSelection.Location = new System.Drawing.Point(257, 18);
             this.lbCustomerSelection.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbCustomerSelection.Name = "lbCustomerSelection";
-            this.lbCustomerSelection.Size = new System.Drawing.Size(110, 15);
+            this.lbCustomerSelection.Size = new System.Drawing.Size(53, 18);
             this.lbCustomerSelection.TabIndex = 2;
-            this.lbCustomerSelection.Text = "Costumer Selection";
+            this.lbCustomerSelection.Text = "Kunde";
             // 
             // flpProductSelection
             // 
@@ -141,7 +144,7 @@
             this.gpCustomer.Controls.Add(this.lbStreetAndHousenumber);
             this.gpCustomer.Controls.Add(this.lbFirstAndLastname);
             this.gpCustomer.Controls.Add(this.lbCompany);
-            this.gpCustomer.Location = new System.Drawing.Point(303, 7);
+            this.gpCustomer.Location = new System.Drawing.Point(390, 10);
             this.gpCustomer.Margin = new System.Windows.Forms.Padding(2);
             this.gpCustomer.Name = "gpCustomer";
             this.gpCustomer.Padding = new System.Windows.Forms.Padding(2);
@@ -152,37 +155,40 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(466, 45);
+            this.btnCreate.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCreate.BackgroundImage")));
+            this.btnCreate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnCreate.Location = new System.Drawing.Point(140, 18);
             this.btnCreate.Margin = new System.Windows.Forms.Padding(2);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(72, 20);
+            this.btnCreate.Size = new System.Drawing.Size(46, 44);
             this.btnCreate.TabIndex = 0;
-            this.btnCreate.Text = "Create File";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Visible = false;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // btnAddCustomer
             // 
-            this.btnAddCustomer.Location = new System.Drawing.Point(127, 37);
+            this.btnAddCustomer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddCustomer.BackgroundImage")));
+            this.btnAddCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnAddCustomer.Location = new System.Drawing.Point(205, 18);
             this.btnAddCustomer.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddCustomer.Name = "btnAddCustomer";
-            this.btnAddCustomer.Size = new System.Drawing.Size(39, 26);
+            this.btnAddCustomer.Size = new System.Drawing.Size(46, 44);
             this.btnAddCustomer.TabIndex = 0;
-            this.btnAddCustomer.Text = "Add";
             this.btnAddCustomer.UseVisualStyleBackColor = true;
             this.btnAddCustomer.Click += new System.EventHandler(this.btnAddCustomer_Click);
             // 
             // btnSettings
             // 
-            this.btnSettings.Location = new System.Drawing.Point(15, 5);
+            this.btnSettings.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.btnSettings.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSettings.BackgroundImage")));
+            this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSettings.Location = new System.Drawing.Point(76, 18);
             this.btnSettings.Margin = new System.Windows.Forms.Padding(2);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(35, 26);
+            this.btnSettings.Size = new System.Drawing.Size(46, 44);
             this.btnSettings.TabIndex = 0;
-            this.btnSettings.Text = "Sett";
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Visible = false;
+            this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // lbCount
@@ -191,9 +197,9 @@
             this.lbCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbCount.Location = new System.Drawing.Point(6, 19);
             this.lbCount.Name = "lbCount";
-            this.lbCount.Size = new System.Drawing.Size(40, 15);
+            this.lbCount.Size = new System.Drawing.Size(37, 15);
             this.lbCount.TabIndex = 9;
-            this.lbCount.Text = "Count";
+            this.lbCount.Text = "Stück";
             // 
             // lbProduct
             // 
@@ -203,7 +209,7 @@
             this.lbProduct.Name = "lbProduct";
             this.lbProduct.Size = new System.Drawing.Size(49, 15);
             this.lbProduct.TabIndex = 9;
-            this.lbProduct.Text = "Product";
+            this.lbProduct.Text = "Produkt";
             // 
             // lbUnit
             // 
@@ -211,9 +217,9 @@
             this.lbUnit.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbUnit.Location = new System.Drawing.Point(288, 19);
             this.lbUnit.Name = "lbUnit";
-            this.lbUnit.Size = new System.Drawing.Size(29, 15);
+            this.lbUnit.Size = new System.Drawing.Size(45, 15);
             this.lbUnit.TabIndex = 9;
-            this.lbUnit.Text = "Unit";
+            this.lbUnit.Text = "Einheit";
             // 
             // lbPrice
             // 
@@ -221,9 +227,9 @@
             this.lbPrice.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbPrice.Location = new System.Drawing.Point(201, 19);
             this.lbPrice.Name = "lbPrice";
-            this.lbPrice.Size = new System.Drawing.Size(35, 15);
+            this.lbPrice.Size = new System.Drawing.Size(68, 15);
             this.lbPrice.TabIndex = 9;
-            this.lbPrice.Text = "Price";
+            this.lbPrice.Text = "Einzelpreis";
             // 
             // lbSubtotal
             // 
@@ -231,9 +237,9 @@
             this.lbSubtotal.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbSubtotal.Location = new System.Drawing.Point(383, 19);
             this.lbSubtotal.Name = "lbSubtotal";
-            this.lbSubtotal.Size = new System.Drawing.Size(52, 15);
+            this.lbSubtotal.Size = new System.Drawing.Size(92, 15);
             this.lbSubtotal.TabIndex = 9;
-            this.lbSubtotal.Text = "Subtotal";
+            this.lbSubtotal.Text = "Produktsumme";
             // 
             // grpProductTable
             // 
@@ -255,7 +261,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.DarkKhaki;
-            this.ClientSize = new System.Drawing.Size(577, 323);
+            this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.grpProductTable);
             this.Controls.Add(this.gpCustomer);
             this.Controls.Add(this.flpProductSelection);
@@ -265,7 +271,9 @@
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnAddCustomer);
             this.Controls.Add(this.btnAddProduct);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximumSize = new System.Drawing.Size(600, 400);
             this.Name = "MainForm";
             this.Text = "Beecountant";
             this.gpCustomer.ResumeLayout(false);

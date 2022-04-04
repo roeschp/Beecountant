@@ -5,11 +5,12 @@
     <TargetFramework>net6.0-windows</TargetFramework>
 	<SelfContained>true</SelfContained>
 	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<PublishReadyToRun>true</PublishReadyToRun>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageIcon>beecountant.png</PackageIcon>
-    <ApplicationIcon>Content\beecountant_IhU_icon.ico</ApplicationIcon>
+    <ApplicationIcon>beecountant_IhU_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Content\beecountant_IhU_icon.ico" />
+    <Content Include="beecountant_IhU_icon.ico" />
   </ItemGroup>
 
   <ItemGroup>

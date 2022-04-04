@@ -67,20 +67,55 @@ namespace Accountant.Objects
             }
         }
 
-        public static void AddProduct(ProductObject tProduct)
+        public static void AddProductList(List<ProductObject> tProductList)
         {
-            if(tProduct != null)
-                ProductList.Add(tProduct);
+            if (tProductList == null)
+                return;
+
+            ProductList = new List<ProductObject>();
+
+            foreach (var tProduct in tProductList)
+            {
+                if(tProduct != null)
+                {
+                    ProductList.Add(tProduct);
+                }
+            }
         }
 
         public static CustomerObject GetCustomer()
         {
-            return CustomerList[0];
+            if(CustomerList.Count > 0)
+            {
+                return CustomerList[0];
+            }
+            else
+            {
+                return null;
+            }
+            
         }
         
         public static List<ProductObject> GetProductList()
         {
             return ProductList;
+        }
+
+        public static Selection GetSelectionState(string tProduct)
+        {
+            Enum.TryParse(tProduct, true, out Product aProduct);
+
+            var aObject = ProductList.Where(p => ProductList.Any(l => p.Name == aProduct)).ToList();
+
+            if (aObject.Count > 1)
+            {
+                return Selection.Multi;
+            }
+            else
+            {
+                return Selection.Single;
+            }
+
         }
 
         public static void CreateFile(OrderObject tOrderObject)

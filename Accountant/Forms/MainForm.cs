@@ -8,7 +8,6 @@ namespace Accountant
     public partial class MainForm : Form
     {
         private List<ufProductSelection> ProductObjectList = new List<ufProductSelection>();
-        private List<ProductObject>? ProductList = new List<ProductObject>();
         private int MonthID = 1;
 
         private JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings()
@@ -33,38 +32,69 @@ namespace Accountant
                 MonthID = aFiles.Count() + 1;
             }
 
-            var aCustomerList = File.ReadAllText(aCustomerPath);
-            var aPriceList = File.ReadAllText(aPrivePath);
+            ValidatePath(aPrivePath);
+            ValidatePath(aCustomerPath);
 
-            ProductList = JsonConvert.DeserializeObject<List<ProductObject>>(aPriceList, JsonSerializerSettings);
-
-            if(ProductList != null)
+            try
             {
-                foreach (var aItem in ProductList)
+                var aCustomerList = File.ReadAllText(aCustomerPath);
+                var aPriceList = File.ReadAllText(aPrivePath);
+
+                List<ProductObject>? ProductList = JsonConvert.DeserializeObject<List<ProductObject>>(aPriceList, JsonSerializerSettings);
+
+                if (ProductList != null)
                 {
-                    if (aItem != null)
-                        FormManager.SetProductToList(aItem);
+                    ObjectManager.AddProductList(ProductList);
                 }
-            }
-
-            List<CustomerObject>? aObjectList = JsonConvert.DeserializeObject<List<CustomerObject>>(aCustomerList, JsonSerializerSettings);
-
-            if(aObjectList != null)
-            {
-                foreach (var aObject in aObjectList)
+                else
                 {
-                    if (aObject != null)
-                    {
-                        ObjectManager.SetCustomerObject(aObject);
+                    MessageBox.Show("Please set a valid products and pricelist to the working directory!");
+                    return;
+                }
 
-                        if(cbCustomer.Items.Contains(aObject.CompanyName) == false)
+                List<CustomerObject>? aObjectList = JsonConvert.DeserializeObject<List<CustomerObject>>(aCustomerList, JsonSerializerSettings);
+
+                if (aObjectList != null)
+                {
+                    foreach (var aObject in aObjectList)
+                    {
+                        if (aObject != null)
                         {
-                            cbCustomer.Items.Add(aObject.CompanyName);
+                            ObjectManager.SetCustomerObject(aObject);
+
+                            if (cbCustomer.Items.Contains(aObject.CompanyName) == false)
+                            {
+                                cbCustomer.Items.Add(aObject.CompanyName);
+                            }
                         }
                     }
+                    if (cbCustomer.Items.Count > 0)
+                        cbCustomer.SelectedIndex = 0;
                 }
-                if(cbCustomer.Items.Count > 0) 
-                    cbCustomer.SelectedIndex = 0;
+            }
+            catch
+            {
+                MessageBox.Show("Failed to read Files for customer and pricelist - please try again");
+                Application.Exit();
+            }
+
+            
+        }
+
+        private void ValidatePath(string tPath)
+        {
+            try
+            {
+                if(!File.Exists(tPath))
+                {
+                    File.Create(tPath);
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Failed to create working directory");
+                Application.Exit();
             }
         }
 
@@ -72,16 +102,13 @@ namespace Accountant
         {
             if (ObjectManager.GetCustomer() == null)
             {
-                var aCustomer = new CustomerForm();
-                flpProductSelection.Size = new Size(aCustomer.Width, aCustomer.Height);
-                flpProductSelection.Controls.Add(aCustomer);
-                flpProductSelection.Show();
-                btnAddProduct.Enabled = false;
+                btnAddCustomer_Click(sender, e);
             }
             else
             {
                 grpProductTable.Visible = true;
                 btnAddCustomer.Enabled = false;
+                btnSettings.Enabled = false;
                 btnCreate.Visible = true;
                 cbCustomer.Enabled = false;
 
@@ -110,8 +137,9 @@ namespace Accountant
             if(!string.IsNullOrEmpty(tCustomerName))
             {
                 cbCustomer.Text = tCustomerName;
-                
-                if(cbCustomer.Items.Contains(tCustomerName) == false)
+                ProductObjectList = new List<ufProductSelection>();
+
+                if (cbCustomer.Items.Contains(tCustomerName) == false)
                 {
                     cbCustomer.Items.Add(tCustomerName);
                 }
@@ -123,16 +151,19 @@ namespace Accountant
             btnAddCustomer.Enabled = true;
             btnAddProduct.Enabled = true;
             cbCustomer.Enabled = true;
+            gpCustomer.Visible = true;
 
             RemoveProduct(tCustomerControl);
 
             var aCustomer = ObjectManager.GetCustomer();
 
-            lbCompany.Text = aCustomer.CompanyName;
-            lbFirstAndLastname.Text = $"{aCustomer.FirstName} {aCustomer.LastName}";
-            lbStreetAndHousenumber.Text = $"{aCustomer.Street} {aCustomer.HouseNumber}";
-            lbPostalcodeAndCity.Text = $"{aCustomer.PostalCode} {aCustomer.City}";
-            gpCustomer.Visible = true;
+            if (aCustomer != null)
+            {
+                lbCompany.Text = aCustomer.CompanyName;
+                lbFirstAndLastname.Text = $"{aCustomer.FirstName} {aCustomer.LastName}";
+                lbStreetAndHousenumber.Text = $"{aCustomer.Street} {aCustomer.HouseNumber}";
+                lbPostalcodeAndCity.Text = $"{aCustomer.PostalCode} {aCustomer.City}";
+            }
         }
 
         private void RemoveProduct(Control tControl)
@@ -150,6 +181,7 @@ namespace Accountant
                     grpProductTable.Visible = false;
                     btnCreate.Visible = false;
                     btnAddCustomer.Enabled = true;
+                    btnSettings.Enabled = true;
                     cbCustomer.Enabled = true;
                 }
             }
@@ -161,7 +193,9 @@ namespace Accountant
             List<ProductObject> aProductList = new List<ProductObject>();
             double? aTotelPrice = 0;
 
-            foreach(var aProduct in ProductObjectList)
+            SetInput(false);
+
+            foreach (var aProduct in ProductObjectList)
             {
                 var aObject = aProduct.GetProduct();
                 
@@ -178,7 +212,29 @@ namespace Accountant
                 aOrder.Id = $"{MonthID}-{DateTime.Now.Month.ToString("00")}-{DateTime.Now.Year}";
                 ObjectManager.CreateFile(aOrder);
             }
-            
+
+            SetInput(true);
+            ProductObjectList = new List<ufProductSelection>();
+        }
+
+        private void SetInput(bool tSet)
+        {
+            if(tSet)
+            {
+                btnCreate.Enabled = true;
+                btnCreate.Visible = false;
+                flpProductSelection.Controls.Clear();
+            }
+            else
+            {
+                btnCreate.Enabled = tSet;
+            }
+
+            btnSettings.Enabled = tSet;
+            btnAddCustomer.Enabled = tSet;
+            btnAddProduct.Enabled = tSet;
+            cbCustomer.Enabled = tSet;
+            flpProductSelection.Enabled = tSet;
         }
 
         private void cbCustomer_SelectedIndexChanged(object sender, EventArgs e)
@@ -215,16 +271,15 @@ namespace Accountant
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            btnAddCustomer.Enabled = false;
-            btnCreate.Enabled = false;
+            btnAddProduct.Enabled = false;
             btnAddCustomer.Enabled = false;
             cbCustomer.Enabled = false;
 
-            var aSetting = new SettingForm(ProductList);
+            var aSetting = new SettingForm(ObjectManager.GetProductList());
 
+            flpProductSelection.Size = new Size(aSetting.Width, aSetting.Height);
             flpProductSelection.Controls.Add(aSetting);
             flpProductSelection.Show();
-            // Add settings to panel
         }
     }
 }

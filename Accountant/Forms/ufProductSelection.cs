@@ -52,7 +52,7 @@ namespace Accountant
         {
             if (Enum.TryParse(cbProducts.Text, true, out Product aProduct))
             {
-                var aObjectList = FormManager.GetProductList();
+                var aObjectList = ObjectManager.GetProductList();
 
                 foreach (var aObject in aObjectList)
                 {
@@ -68,7 +68,7 @@ namespace Accountant
 
         private void cbProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Selection aSelection = FormManager.GetSelectionState(cbProducts.Text);
+            Selection aSelection = ObjectManager.GetSelectionState(cbProducts.Text);
             nrProductCount.Value = 1;
             
             switch(aSelection)
@@ -126,7 +126,7 @@ namespace Accountant
         {
             if(CreateCurrentProductObject())
             {
-                var aObjectList = FormManager.GetProductList();
+                var aObjectList = ObjectManager.GetProductList();
 
                 var aProduct = aObjectList.SingleOrDefault(Product => Product.Name == CurrentProduct.Name && Product.Weight == cbUnit.Text);
                 

@@ -1,6 +1,5 @@
 ﻿using Accountant.Objects;
 using Microsoft.Office.Interop.Word;
-using System.Data;
 using System.Diagnostics;
 using System.Reflection;
 using Word = Microsoft.Office.Interop.Word;
@@ -50,6 +49,7 @@ namespace Accountant.Util
 
                 Word.Table aTable = document.Tables[1];
 
+                // Start second row to skip title row
                 int aRowIndex = 2;
 
                 for (int aIndex = 0; aIndex < tOrderObject.Products.Count; aIndex++)
@@ -76,27 +76,28 @@ namespace Accountant.Util
                 SearchReplace("cNoTaxes", $"{tOrderObject.Price}€");
                 SearchReplace("cTaxes", $"{aTaxes}€");
                 SearchReplace("cTotal", $"{aTotal}€");
-                
+               
                 document.SaveAs2(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, DocumentFolder, tOrderObject.Id + ".docx"));
+                Thread.Sleep(5000);
                 document.SaveAs2(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf"), WdSaveFormat.wdFormatPDF);
+                Thread.Sleep(5000);
                 aWord.Quit();
-                
-                Process p = new Process();
-                p.StartInfo = new ProcessStartInfo()
-                {
-                    CreateNoWindow = true,
-                    Verb = "print",
-                    FileName = "explorer",
-                    Arguments = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf" )// put the path of the pdf file you want to print
-                };
-                p.Start();
-
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Error - Failed to create Word document", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error - Failed to create Word document\n {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            Process aProcess = new Process();
+            aProcess.StartInfo = new ProcessStartInfo()
+            {
+                CreateNoWindow = true,
+                Verb = "print",
+                FileName = "explorer",
+                Arguments = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf" )
+            };
+            aProcess.Start();            
         }
 
         private static void SearchReplace(string tFind, string tReplace)

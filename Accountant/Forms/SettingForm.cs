@@ -1,21 +1,12 @@
 ﻿using Accountant.Objects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static Accountant.Util.Util;
 
 namespace Accountant.Forms
 {
     public partial class SettingForm : UserControl
     {
-        List<ProductObject> products;
+        private List<ProductObject> products;
+        private ProductObject? ProductObj;
 
         public SettingForm(List<ProductObject> tProductList)
         {
@@ -37,14 +28,18 @@ namespace Accountant.Forms
         {
             var aString = cbProduct.SelectedItem.ToString();
 
-            if (!String.IsNullOrEmpty(aString))
+            if (!string.IsNullOrEmpty(aString))
             {
                 var aRegex = Regex.Match(aString, @"(?<product>.*)_(?<weight>.*)");
 
                 if (aRegex.Success)
                 {
-                    var aResult = products.SingleOrDefault(p => p.Name.ToString() == aRegex.Groups["product"].Value && p.Weight == aRegex.Groups["weight"].Value);
-                
+                    ProductObj = products.SingleOrDefault(p => p.Name.ToString() == aRegex.Groups["product"].Value && p.Weight == aRegex.Groups["weight"].Value);
+
+                    if (ProductObj != null)
+                    {
+                        SetValues(ProductObj);
+                    }
                 }
             }
         }
@@ -54,21 +49,80 @@ namespace Accountant.Forms
             if (products != null)
             {
                 txtPrice.Text = tProduct.SinglePrice.ToString();
-
-                switch(tProduct.Selection)
-                {
-                    case Selection.Single:
-                        {
-
-                            break;
-                        }
-                    case Selection.Multi:
-                        {
-
-                            break;
-                        }
-                }
+                txtCapacity.Text = tProduct.Weight.ToString();
+                txtUnit.Text = tProduct.Unit.ToString();
             }
+        }
+
+        private bool ChangeProduct(ProductObject newProduct)
+        {
+            if (newProduct == null)
+                return false;
+
+            var lastProduct = products.SingleOrDefault(p => p.Name == newProduct.Name && p.Weight == newProduct.Weight);
+
+            if (lastProduct != null)
+            {
+                products.Remove(lastProduct);
+                products.Add(newProduct);
+                return true;
+            }
+
+            return false;
+        }
+
+        private void btnSafe_Click(object sender, EventArgs e)
+        {
+            if (ProductObj == null)
+                return;
+
+            if(string.IsNullOrEmpty(txtPrice.Text))
+            {
+                lbPrice.ForeColor = Color.Red;
+                return;
+            }
+
+            if(string.IsNullOrEmpty(txtCapacity.Text))
+            {
+                lbCapacity.ForeColor = Color.Red;
+                return;
+            }
+
+            ProductObject ProductChange = ProductObj;
+            ProductChange.SinglePrice = Convert.ToDouble(txtPrice.Text);
+            ProductChange.Weight = txtCapacity.Text;
+            ProductChange.Unit = txtUnit.Text;
+
+            if((ProductChange.SinglePrice != ProductObj.SinglePrice)
+                || (ProductChange.Weight != ProductObj.Weight)
+                || (ProductChange.Unit != ProductObj.Unit))
+            {
+                DialogResult aResult = MessageBox.Show($"Möchtest du wirklich das Produkt {ProductChange.Name} ändern?", "Einstellungsänderung", MessageBoxButtons.YesNoCancel);
+
+                if (aResult == DialogResult.Yes)
+                {
+                    if(ChangeProduct(ProductChange))
+                    {
+                        ObjectManager.AddProductList(products);
+                    }
+                }
+                return;
+            }
+        }
+
+        private void txtPrice_Enter(object sender, EventArgs e)
+        {
+            lbPrice.ForeColor = Color.Black;
+        }
+
+        private void txtCapacity_Enter(object sender, EventArgs e)
+        {
+            lbCapacity.ForeColor = Color.Black;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            FormManager.CustomerInputClosed(this);
         }
     }
 }
