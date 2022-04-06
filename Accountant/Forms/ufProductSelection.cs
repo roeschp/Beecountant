@@ -10,7 +10,6 @@ namespace Accountant
     public partial class ufProductSelection : UserControl
     {
         public Action<Control>? RemoveControl;
-
         private ProductObject CurrentProduct;
 
         public ufProductSelection()
@@ -52,7 +51,7 @@ namespace Accountant
         {
             if (Enum.TryParse(cbProducts.Text, true, out Product aProduct))
             {
-                var aObjectList = ObjectManager.GetProductList();
+                var aObjectList = ObjectManager.GetCurrentProductList();
 
                 foreach (var aObject in aObjectList)
                 {
@@ -126,7 +125,7 @@ namespace Accountant
         {
             if(CreateCurrentProductObject())
             {
-                var aObjectList = ObjectManager.GetProductList();
+                var aObjectList = ObjectManager.GetCurrentProductList();
 
                 var aProduct = aObjectList.SingleOrDefault(Product => Product.Name == CurrentProduct.Name && Product.Weight == cbUnit.Text);
                 

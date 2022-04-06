@@ -1,0 +1,137 @@
+[
+  {
+    "Name": 0,
+    "Weight": "500",
+    "Unit": "g",
+    "SinglePrice": 10.0,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 0,
+    "Weight": "250",
+    "Unit": "g",
+    "SinglePrice": 7.5,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 1,
+    "Weight": "500",
+    "Unit": "g",
+    "SinglePrice": 9.0,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 1,
+    "Weight": "250",
+    "Unit": "g",
+    "SinglePrice": 6.5,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 2,
+    "Weight": "500",
+    "Unit": "g",
+    "SinglePrice": 9.0,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 2,
+    "Weight": "250",
+    "Unit": "g",
+    "SinglePrice": 6.5,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 3,
+    "Weight": "500",
+    "Unit": "g",
+    "SinglePrice": 7.5,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 3,
+    "Weight": "250",
+    "Unit": "g",
+    "SinglePrice": 5.0,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 4,
+    "Weight": "500",
+    "Unit": "g",
+    "SinglePrice": 6.5,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 4,
+    "Weight": "250",
+    "Unit": "g",
+    "SinglePrice": 4.0,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 5,
+    "Weight": "500",
+    "Unit": "g",
+    "SinglePrice": 6.0,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 5,
+    "Weight": "250",
+    "Unit": "g",
+    "SinglePrice": 3.5,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 0
+  },
+  {
+    "Name": 6,
+    "Weight": "0.7",
+    "Unit": "l",
+    "SinglePrice": 8.5,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 1
+  },
+  {
+    "Name": 7,
+    "Weight": "1",
+    "Unit": "Item",
+    "SinglePrice": 9.9,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 1
+  },
+  {
+    "Name": 8,
+    "Weight": "800",
+    "Unit": "g",
+    "SinglePrice": 8.8,
+    "SubTotal": null,
+    "Count": null,
+    "Selection": 1
+  }
+]

@@ -45,12 +45,16 @@
             this.btnSafe = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lbTitel = new System.Windows.Forms.Label();
+            this.rdB2C = new System.Windows.Forms.RadioButton();
+            this.rdB2B = new System.Windows.Forms.RadioButton();
+            this.grpBusinessRelation = new System.Windows.Forms.GroupBox();
+            this.grpBusinessRelation.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbCity
             // 
             this.lbCity.AutoSize = true;
-            this.lbCity.Location = new System.Drawing.Point(214, 155);
+            this.lbCity.Location = new System.Drawing.Point(214, 174);
             this.lbCity.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbCity.Name = "lbCity";
             this.lbCity.Size = new System.Drawing.Size(34, 15);
@@ -60,7 +64,7 @@
             // lbPostelCode
             // 
             this.lbPostelCode.AutoSize = true;
-            this.lbPostelCode.Location = new System.Drawing.Point(11, 155);
+            this.lbPostelCode.Location = new System.Drawing.Point(11, 174);
             this.lbPostelCode.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbPostelCode.Name = "lbPostelCode";
             this.lbPostelCode.Size = new System.Drawing.Size(27, 15);
@@ -70,7 +74,7 @@
             // lbHouseNumber
             // 
             this.lbHouseNumber.AutoSize = true;
-            this.lbHouseNumber.Location = new System.Drawing.Point(214, 122);
+            this.lbHouseNumber.Location = new System.Drawing.Point(214, 141);
             this.lbHouseNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbHouseNumber.Name = "lbHouseNumber";
             this.lbHouseNumber.Size = new System.Drawing.Size(80, 15);
@@ -80,7 +84,7 @@
             // lbStreet
             // 
             this.lbStreet.AutoSize = true;
-            this.lbStreet.Location = new System.Drawing.Point(11, 124);
+            this.lbStreet.Location = new System.Drawing.Point(11, 143);
             this.lbStreet.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbStreet.Name = "lbStreet";
             this.lbStreet.Size = new System.Drawing.Size(40, 15);
@@ -90,7 +94,7 @@
             // lbLastName
             // 
             this.lbLastName.AutoSize = true;
-            this.lbLastName.Location = new System.Drawing.Point(214, 92);
+            this.lbLastName.Location = new System.Drawing.Point(214, 111);
             this.lbLastName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbLastName.Name = "lbLastName";
             this.lbLastName.Size = new System.Drawing.Size(65, 15);
@@ -100,7 +104,7 @@
             // lbCompany
             // 
             this.lbCompany.AutoSize = true;
-            this.lbCompany.Location = new System.Drawing.Point(11, 61);
+            this.lbCompany.Location = new System.Drawing.Point(10, 69);
             this.lbCompany.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbCompany.Name = "lbCompany";
             this.lbCompany.Size = new System.Drawing.Size(37, 15);
@@ -110,7 +114,7 @@
             // lbFirstName
             // 
             this.lbFirstName.AutoSize = true;
-            this.lbFirstName.Location = new System.Drawing.Point(11, 92);
+            this.lbFirstName.Location = new System.Drawing.Point(11, 111);
             this.lbFirstName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbFirstName.Name = "lbFirstName";
             this.lbFirstName.Size = new System.Drawing.Size(54, 15);
@@ -119,7 +123,7 @@
             // 
             // txtHouseNumber
             // 
-            this.txtHouseNumber.Location = new System.Drawing.Point(311, 124);
+            this.txtHouseNumber.Location = new System.Drawing.Point(311, 143);
             this.txtHouseNumber.Margin = new System.Windows.Forms.Padding(2);
             this.txtHouseNumber.Name = "txtHouseNumber";
             this.txtHouseNumber.Size = new System.Drawing.Size(106, 23);
@@ -128,7 +132,7 @@
             // 
             // txtLastName
             // 
-            this.txtLastName.Location = new System.Drawing.Point(311, 92);
+            this.txtLastName.Location = new System.Drawing.Point(311, 111);
             this.txtLastName.Margin = new System.Windows.Forms.Padding(2);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(106, 23);
@@ -137,7 +141,7 @@
             // 
             // txtCity
             // 
-            this.txtCity.Location = new System.Drawing.Point(311, 152);
+            this.txtCity.Location = new System.Drawing.Point(311, 171);
             this.txtCity.Margin = new System.Windows.Forms.Padding(2);
             this.txtCity.Name = "txtCity";
             this.txtCity.Size = new System.Drawing.Size(106, 23);
@@ -146,7 +150,7 @@
             // 
             // txtPostalCode
             // 
-            this.txtPostalCode.Location = new System.Drawing.Point(90, 152);
+            this.txtPostalCode.Location = new System.Drawing.Point(90, 171);
             this.txtPostalCode.Margin = new System.Windows.Forms.Padding(2);
             this.txtPostalCode.Name = "txtPostalCode";
             this.txtPostalCode.Size = new System.Drawing.Size(106, 23);
@@ -155,7 +159,7 @@
             // 
             // txtStreet
             // 
-            this.txtStreet.Location = new System.Drawing.Point(90, 122);
+            this.txtStreet.Location = new System.Drawing.Point(90, 141);
             this.txtStreet.Margin = new System.Windows.Forms.Padding(2);
             this.txtStreet.Name = "txtStreet";
             this.txtStreet.Size = new System.Drawing.Size(106, 23);
@@ -164,7 +168,7 @@
             // 
             // txtCompany
             // 
-            this.txtCompany.Location = new System.Drawing.Point(90, 61);
+            this.txtCompany.Location = new System.Drawing.Point(90, 66);
             this.txtCompany.Margin = new System.Windows.Forms.Padding(2);
             this.txtCompany.Name = "txtCompany";
             this.txtCompany.Size = new System.Drawing.Size(106, 23);
@@ -173,7 +177,7 @@
             // 
             // txtFirstName
             // 
-            this.txtFirstName.Location = new System.Drawing.Point(90, 92);
+            this.txtFirstName.Location = new System.Drawing.Point(90, 111);
             this.txtFirstName.Margin = new System.Windows.Forms.Padding(2);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(106, 23);
@@ -183,7 +187,7 @@
             // btnSafe
             // 
             this.btnSafe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSafe.Location = new System.Drawing.Point(337, 185);
+            this.btnSafe.Location = new System.Drawing.Point(337, 216);
             this.btnSafe.Margin = new System.Windows.Forms.Padding(2);
             this.btnSafe.Name = "btnSafe";
             this.btnSafe.Size = new System.Drawing.Size(79, 25);
@@ -195,7 +199,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(10, 185);
+            this.btnCancel.Location = new System.Drawing.Point(10, 216);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(79, 25);
@@ -215,10 +219,44 @@
             this.lbTitel.TabIndex = 29;
             this.lbTitel.Text = "Lege einen neuen Kunden an";
             // 
+            // rdB2C
+            // 
+            this.rdB2C.AutoSize = true;
+            this.rdB2C.Checked = true;
+            this.rdB2C.Location = new System.Drawing.Point(122, 21);
+            this.rdB2C.Name = "rdB2C";
+            this.rdB2C.Size = new System.Drawing.Size(78, 19);
+            this.rdB2C.TabIndex = 32;
+            this.rdB2C.TabStop = true;
+            this.rdB2C.Text = "Endkunde";
+            this.rdB2C.UseVisualStyleBackColor = true;
+            // 
+            // rdB2B
+            // 
+            this.rdB2B.AutoSize = true;
+            this.rdB2B.Location = new System.Drawing.Point(6, 21);
+            this.rdB2B.Name = "rdB2B";
+            this.rdB2B.Size = new System.Drawing.Size(108, 19);
+            this.rdB2B.TabIndex = 31;
+            this.rdB2B.Text = "Zwischenkunde";
+            this.rdB2B.UseVisualStyleBackColor = true;
+            // 
+            // grpBusinessRelation
+            // 
+            this.grpBusinessRelation.Controls.Add(this.rdB2C);
+            this.grpBusinessRelation.Controls.Add(this.rdB2B);
+            this.grpBusinessRelation.Location = new System.Drawing.Point(216, 49);
+            this.grpBusinessRelation.Name = "grpBusinessRelation";
+            this.grpBusinessRelation.Size = new System.Drawing.Size(201, 46);
+            this.grpBusinessRelation.TabIndex = 33;
+            this.grpBusinessRelation.TabStop = false;
+            this.grpBusinessRelation.Text = "Geschäftsbeziehung";
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.grpBusinessRelation);
             this.Controls.Add(this.lbCity);
             this.Controls.Add(this.lbPostelCode);
             this.Controls.Add(this.lbHouseNumber);
@@ -238,7 +276,9 @@
             this.Controls.Add(this.btnSafe);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "CustomerForm";
-            this.Size = new System.Drawing.Size(423, 222);
+            this.Size = new System.Drawing.Size(423, 253);
+            this.grpBusinessRelation.ResumeLayout(false);
+            this.grpBusinessRelation.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,5 +303,8 @@
         private Button btnSafe;
         private Button btnCancel;
         private Label lbTitel;
+        private RadioButton rdB2C;
+        private RadioButton rdB2B;
+        private GroupBox grpBusinessRelation;
     }
 }

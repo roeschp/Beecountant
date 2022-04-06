@@ -55,6 +55,11 @@ namespace Accountant.Forms
 
             var aNewCustomerObject = new CustomerObject();
 
+            if (rdB2B.Checked)
+                aNewCustomerObject.Relation = Util.Util.BusinessRelation.B2B;
+            else
+                aNewCustomerObject.Relation = Util.Util.BusinessRelation.B2C;
+
             aNewCustomerObject.CompanyName = txtCompany.Text;
             aNewCustomerObject.FirstName = txtFirstName.Text;
             aNewCustomerObject.LastName = txtLastName.Text;

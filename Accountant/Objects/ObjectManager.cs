@@ -8,7 +8,9 @@ namespace Accountant.Objects
     public static class ObjectManager
     {
         public static Action<string>? CustomerChanged;
-        private static List<ProductObject> ProductList;
+        private static List<ProductObject> CurrentProductList;
+        private static List<ProductObject> ProductListB2C;
+        private static List<ProductObject> ProductListB2B;
         private static List<CustomerObject> CustomerList = new List<CustomerObject>();
         private static CustomerObject Customer;
 
@@ -17,6 +19,7 @@ namespace Accountant.Objects
             if (tCustomer != null)
             {
                 Customer = tCustomer;
+                ChangeProductList(tCustomer.Relation);
 
                 if (CustomerList.Contains(tCustomer) == false)
                 {
@@ -50,7 +53,25 @@ namespace Accountant.Objects
                 if (aObject != null)
                 {
                     Customer = aObject;
+                    ChangeProductList(aObject.Relation);
                 }
+            }
+        }
+
+        private static void ChangeProductList(BusinessRelation tRelation)
+        {
+            switch(tRelation)
+            {
+                case BusinessRelation.B2B:
+                    {
+                        CurrentProductList = ProductListB2B;
+                        break;
+                    }
+                case BusinessRelation.B2C:
+                    {
+                        CurrentProductList = ProductListB2C;
+                        break;
+                    }
             }
         }
 
@@ -67,19 +88,59 @@ namespace Accountant.Objects
             }
         }
 
-        public static void AddProductList(List<ProductObject> tProductList)
+
+        public static void AddProductList(List<ProductObject> tProductList, BusinessRelation tRelation)
         {
             if (tProductList == null)
                 return;
 
-            ProductList = new List<ProductObject>();
-
-            foreach (var tProduct in tProductList)
+            switch(tRelation)
             {
-                if(tProduct != null)
-                {
-                    ProductList.Add(tProduct);
-                }
+                case BusinessRelation.B2C:
+                    {
+                        ProductListB2C = new List<ProductObject>();
+
+                        foreach (var tProduct in tProductList)
+                        {
+                            if (tProduct != null)
+                            {
+                                ProductListB2C.Add(tProduct);
+                            }
+                        }
+                        break;
+                    }
+                case BusinessRelation.B2B:
+                    {
+                        ProductListB2B = new List<ProductObject>();
+
+                        foreach (var tProduct in tProductList)
+                        {
+                            if (tProduct != null)
+                            {
+                                ProductListB2B.Add(tProduct);
+                            }
+                        }
+                        break;
+                    }
+            }            
+        }
+
+        public static void SafeProductList(BusinessRelation tRelation)
+        {
+            switch(tRelation)
+            {
+                case BusinessRelation.B2C:
+                    {
+                        var aContent = JsonConvert.SerializeObject(ProductListB2C, Formatting.Indented);
+                        File.WriteAllText(Path.Combine(Util.Util.PathExecutable, Util.Util.PriceListFolder, Util.Util.PriceListB2C), aContent);
+                        break;
+                    }
+                case BusinessRelation.B2B:
+                    {
+                        var aContent = JsonConvert.SerializeObject(ProductListB2B, Formatting.Indented);
+                        File.WriteAllText(Path.Combine(Util.Util.PathExecutable, Util.Util.PriceListFolder, Util.Util.PriceListB2B), aContent);
+                        break;
+                    }
             }
         }
 
@@ -93,19 +154,28 @@ namespace Accountant.Objects
             {
                 return null;
             }
-            
         }
         
-        public static List<ProductObject> GetProductList()
+        public static List<ProductObject> GetCurrentProductList()
         {
-            return ProductList;
+            return CurrentProductList;
+        }
+
+        public static List<ProductObject> GetProductListB2C()
+        {
+            return ProductListB2C;
+        }
+
+        public static List<ProductObject> GetProductListB2B()
+        {
+            return ProductListB2B;
         }
 
         public static Selection GetSelectionState(string tProduct)
         {
             Enum.TryParse(tProduct, true, out Product aProduct);
 
-            var aObject = ProductList.Where(p => ProductList.Any(l => p.Name == aProduct)).ToList();
+            var aObject = CurrentProductList.Where(p => CurrentProductList.Any(l => p.Name == aProduct)).ToList();
 
             if (aObject.Count > 1)
             {
@@ -115,14 +185,13 @@ namespace Accountant.Objects
             {
                 return Selection.Single;
             }
-
         }
 
         public static void CreateFile(OrderObject tOrderObject)
         {
             if(Customer != null)
             {
-                WordCreater.CreateWord(Customer, tOrderObject);
+                Word.CreateWord(Customer, tOrderObject);
             }
         }
     }

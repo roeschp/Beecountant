@@ -1,13 +1,12 @@
 ﻿using Accountant.Objects;
-using Microsoft.Office.Interop.Word;
 using System.Diagnostics;
 using System.Reflection;
 using Word = Microsoft.Office.Interop.Word;
-
+using Microsoft.Office.Interop.Word;
 
 namespace Accountant.Util
 {
-    public static class WordCreater
+    public static class Word
     {
         private const string TemplateFile = "Template.docx";
         private const string TemplateFolder = "Template";
@@ -16,19 +15,24 @@ namespace Accountant.Util
         private static object TemplatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), TemplateFolder, TemplateFile);
 
         private static object mMissing = Missing.Value;
-        private static Word.Application? aWord ;
-        private static Word.Document? document;
+        private static Microsoft.Office.Interop.Word.Application? aWord ;
+        private static Microsoft.Office.Interop.Word.Document? document;
+
+        
 
         public static void CreateWord(CustomerObject tCustomer ,OrderObject tOrderObject)
         {
+           
             try
             {
-                aWord = new Word.Application();
+                aWord = new Microsoft.Office.Interop.Word.Application();
                 aWord.Visible = false;
                 document = aWord.Documents.OpenNoRepairDialog(TemplatePath);
 
                 document.Activate();
 
+                var aTax = (Util.TaxesFactor - 1) * 100;
+                SearchReplace("cTaxValue", $"{aTax}%");
                 SearchReplace("cNr", tOrderObject.Id);
                 SearchReplace("cDate", $"{DateTime.Now.ToString("dd/MM/yyyy").Replace('-', '/')}");
 
@@ -47,7 +51,7 @@ namespace Accountant.Util
                 if (string.IsNullOrEmpty(tCustomer.PostalCode) == false)
                     SearchReplace("cPostalCode", tCustomer.PostalCode);
 
-                Word.Table aTable = document.Tables[1];
+                Microsoft.Office.Interop.Word.Table aTable = document.Tables[1];
 
                 // Start second row to skip title row
                 int aRowIndex = 2;
@@ -77,9 +81,9 @@ namespace Accountant.Util
                 SearchReplace("cTaxes", $"{aTaxes}€");
                 SearchReplace("cTotal", $"{aTotal}€");
                
-                document.SaveAs2(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, DocumentFolder, tOrderObject.Id + ".docx"));
+                document.SaveAs(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, DocumentFolder, tOrderObject.Id + ".docx"));
                 Thread.Sleep(5000);
-                document.SaveAs2(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf"), WdSaveFormat.wdFormatPDF);
+                document.SaveAs(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf"), WdSaveFormat.wdFormatPDF);
                 Thread.Sleep(5000);
                 aWord.Quit();
             }
@@ -102,13 +106,13 @@ namespace Accountant.Util
 
         private static void SearchReplace(string tFind, string tReplace)
         {
-            Word.Find findObject = document.Application.Selection.Find;
+            Microsoft.Office.Interop.Word.Find findObject = document.Application.Selection.Find;
             findObject.ClearFormatting();
             findObject.Text = tFind;
             findObject.Replacement.ClearFormatting();
             findObject.Replacement.Text = tReplace;
 
-            object replaceAll = Word.WdReplace.wdReplaceAll;
+            object replaceAll = Microsoft.Office.Interop.Word.WdReplace.wdReplaceAll;
             findObject.Execute(ref mMissing, ref mMissing, ref mMissing, ref mMissing, ref mMissing,
         ref mMissing, ref mMissing, ref mMissing, ref mMissing, ref mMissing,
         ref replaceAll, ref mMissing, ref mMissing, ref mMissing, ref mMissing);

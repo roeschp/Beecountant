@@ -6,22 +6,17 @@ namespace Accountant.Forms
     public partial class SettingForm : UserControl
     {
         private List<ProductObject> products;
+        private List<ProductObject> productBackup;
         private ProductObject? ProductObj;
 
-        public SettingForm(List<ProductObject> tProductList)
+        public SettingForm()
         {
             InitializeComponent();
 
-            if(tProductList != null)
-            {
-                products = tProductList;
+            var aTaxes = Math.Round((Util.Util.TaxesFactor - 1) * 100, 2);
+            txtTaxes.Text = aTaxes.ToString();
 
-                foreach (ProductObject aProduct in tProductList)
-                {
-                    cbProduct.Items.Add($"{aProduct.Name}_{aProduct.Weight}");
-                    cbProduct.SelectedIndex = 0;
-                }
-            }
+            rdB2B.Checked = true;
         }
 
         private void cbProduct_SelectedIndexChanged(object sender, EventArgs e)
@@ -54,60 +49,54 @@ namespace Accountant.Forms
             }
         }
 
-        private bool ChangeProduct(ProductObject newProduct)
-        {
-            if (newProduct == null)
-                return false;
-
-            var lastProduct = products.SingleOrDefault(p => p.Name == newProduct.Name && p.Weight == newProduct.Weight);
-
-            if (lastProduct != null)
-            {
-                products.Remove(lastProduct);
-                products.Add(newProduct);
-                return true;
-            }
-
-            return false;
-        }
-
         private void btnSafe_Click(object sender, EventArgs e)
         {
             if (ProductObj == null)
                 return;
 
-            if(string.IsNullOrEmpty(txtPrice.Text))
+            var aTaxes = Convert.ToDouble(txtTaxes.Text);
+            Util.Util.TaxesFactor = Math.Round((aTaxes / 100) + 1, 4);
+
+            Properties.Settings.Default.TaxValue = Convert.ToString(Util.Util.TaxesFactor);
+            Properties.Settings.Default.Save();
+
+            if (string.IsNullOrEmpty(txtPrice.Text))
             {
                 lbPrice.ForeColor = Color.Red;
                 return;
             }
 
-            if(string.IsNullOrEmpty(txtCapacity.Text))
+            var aChangeList = productBackup.Where(c => products.Any(d =>c.SinglePrice != d.SinglePrice && c.Name == d.Name && c.Weight == d.Weight)).ToList();
+
+
+            if (aChangeList.Count >= 0)
             {
-                lbCapacity.ForeColor = Color.Red;
-                return;
-            }
-
-            ProductObject ProductChange = ProductObj;
-            ProductChange.SinglePrice = Convert.ToDouble(txtPrice.Text);
-            ProductChange.Weight = txtCapacity.Text;
-            ProductChange.Unit = txtUnit.Text;
-
-            if((ProductChange.SinglePrice != ProductObj.SinglePrice)
-                || (ProductChange.Weight != ProductObj.Weight)
-                || (ProductChange.Unit != ProductObj.Unit))
-            {
-                DialogResult aResult = MessageBox.Show($"Möchtest du wirklich das Produkt {ProductChange.Name} ändern?", "Einstellungsänderung", MessageBoxButtons.YesNoCancel);
-
-                if (aResult == DialogResult.Yes)
+                
+                foreach (var aBackup in aChangeList)
                 {
-                    if(ChangeProduct(ProductChange))
+                    var aChangeBack = products.Find(c => c.Name == aBackup.Name && c.Weight == aBackup.Weight);
+                    
+                    DialogResult aResult = MessageBox.Show($"Möchtest du wirklich das Produkt \'{aChangeBack.Name}\' ändern auf \'{aChangeBack.SinglePrice}€\'?", "Preisänderung", MessageBoxButtons.YesNo);
+
+                    if (aResult == DialogResult.No)
                     {
-                        ObjectManager.AddProductList(products);
+                        aChangeBack.SinglePrice = aBackup.SinglePrice;                       
                     }
                 }
-                return;
+
+                if (rdB2B.Checked)
+                {
+                    ObjectManager.AddProductList(products, Util.Util.BusinessRelation.B2B);
+                    ObjectManager.SafeProductList(Util.Util.BusinessRelation.B2B);
+                }
+                else
+                {
+                    ObjectManager.AddProductList(products, Util.Util.BusinessRelation.B2C);
+                    ObjectManager.SafeProductList(Util.Util.BusinessRelation.B2C);
+                }
             }
+
+            FormManager.CustomerInputClosed(this);
         }
 
         private void txtPrice_Enter(object sender, EventArgs e)
@@ -123,6 +112,64 @@ namespace Accountant.Forms
         private void btnCancel_Click(object sender, EventArgs e)
         {
             FormManager.CustomerInputClosed(this);
+        }
+
+        private void rdB2C_CheckedChanged(object sender, EventArgs e)
+        {
+            var aListB2C = ObjectManager.GetProductListB2C();
+
+            if (aListB2C != null)
+            {
+                products = aListB2C;
+
+                productBackup = new List<ProductObject>();
+
+                productBackup = Util.Util.DeepCopy(products);
+
+
+                cbProduct.Items.Clear();
+
+                foreach (ProductObject aProduct in aListB2C)
+                {
+                    cbProduct.Items.Add($"{aProduct.Name}_{aProduct.Weight}");
+                    cbProduct.SelectedIndex = 0;
+                }
+            }
+        }
+
+        
+        private void rdB2B_CheckedChanged(object sender, EventArgs e)
+        {
+            var aListB2B = ObjectManager.GetProductListB2B();
+
+            if (aListB2B != null)
+            {
+                products = aListB2B;
+                productBackup = new List<ProductObject>();
+
+                productBackup = Util.Util.DeepCopy(products);
+
+                cbProduct.Items.Clear();
+
+                foreach (ProductObject aProduct in aListB2B)
+                {
+                    cbProduct.Items.Add($"{aProduct.Name}_{aProduct.Weight}");
+                    cbProduct.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void txtPrice_TextChanged(object sender, EventArgs e)
+        {
+            var aChange = txtPrice.Text;
+
+            if (string.IsNullOrEmpty(aChange) == false && ProductObj != null)
+            {
+                var aChangeProduct = products.SingleOrDefault(p => p.Name == ProductObj.Name && p.Weight == ProductObj.Weight);
+                
+                if(aChangeProduct != null)
+                    aChangeProduct.SinglePrice = Convert.ToDouble(aChange);
+            }
         }
     }
 }

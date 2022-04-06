@@ -1,4 +1,6 @@
-﻿namespace Accountant.Objects
+﻿using static Accountant.Util.Util;
+
+namespace Accountant.Objects
 {
     public class CustomerObject
     {
@@ -9,7 +11,7 @@
         public string? HouseNumber;
         public string? PostalCode;
         public string? City;
-        public string? Region;
+        public BusinessRelation Relation;
 
         public CustomerObject()
         {
@@ -20,7 +22,7 @@
             HouseNumber = null;
             PostalCode = null;
             City = null;
-            Region = null;
+            Relation = BusinessRelation.B2C;
         }
     }
 }
