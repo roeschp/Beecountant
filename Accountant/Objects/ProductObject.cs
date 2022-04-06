@@ -2,6 +2,7 @@
 
 namespace Accountant.Objects
 {
+    [Serializable]
     public class ProductObject
     {
         public Product? Name;

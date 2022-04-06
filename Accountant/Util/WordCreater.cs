@@ -1,7 +1,7 @@
 ﻿using Accountant.Objects;
-using Microsoft.Office.Interop.Word;
 using System.Diagnostics;
 using System.Reflection;
+using Microsoft.Office.Interop.Word;
 using Word = Microsoft.Office.Interop.Word;
 
 
@@ -77,9 +77,9 @@ namespace Accountant.Util
                 SearchReplace("cTaxes", $"{aTaxes}€");
                 SearchReplace("cTotal", $"{aTotal}€");
                
-                document.SaveAs2(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, DocumentFolder, tOrderObject.Id + ".docx"));
+                document.SaveAs(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, DocumentFolder, tOrderObject.Id + ".docx"));
                 Thread.Sleep(5000);
-                document.SaveAs2(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf"), WdSaveFormat.wdFormatPDF);
+                document.SaveAs(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf"), WdSaveFormat.wdFormatPDF);
                 Thread.Sleep(5000);
                 aWord.Quit();
             }

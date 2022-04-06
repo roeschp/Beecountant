@@ -261,7 +261,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.DarkKhaki;
-            this.ClientSize = new System.Drawing.Size(584, 361);
+            this.ClientSize = new System.Drawing.Size(584, 391);
             this.Controls.Add(this.grpProductTable);
             this.Controls.Add(this.gpCustomer);
             this.Controls.Add(this.flpProductSelection);
@@ -273,7 +273,7 @@
             this.Controls.Add(this.btnAddProduct);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximumSize = new System.Drawing.Size(600, 400);
+            this.MaximumSize = new System.Drawing.Size(600, 430);
             this.Name = "MainForm";
             this.Text = "Beecountant";
             this.gpCustomer.ResumeLayout(false);

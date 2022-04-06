@@ -22,29 +22,36 @@ namespace Accountant
             FormManager.SelectionClosed += CustomerInputDone;
             ObjectManager.CustomerChanged += ChangeCustomer;
 
-            var aPrivePath = Path.Combine(PathExecutable, PriceListFolder, PriceListName);
+            Util.Util.TaxesFactor = Convert.ToDouble(Properties.Settings.Default.TaxValue);
+
+            var aPricePathB2C = Path.Combine(PathExecutable, PriceListFolder, PriceListB2C);
+            var aPricePathB2B = Path.Combine(PathExecutable, PriceListFolder, PriceListB2B);
             var aCustomerPath = Path.Combine(PathExecutable, CustomerListFolder, CustomerListName);
             var aFolderInfo = new DirectoryInfo(Path.Combine(PathExecutable, "Invoices"));
-            
-            if(aFolderInfo.Exists)
+
+            if (aFolderInfo.Exists)
             {
                 var aFiles = aFolderInfo.GetFiles(@$"*{DateTime.Now.Month}-{DateTime.Now.Year}.pdf");
                 MonthID = aFiles.Count() + 1;
             }
 
-            ValidatePath(aPrivePath);
+            ValidatePath(aPricePathB2C);
+            ValidatePath(aPricePathB2B);
             ValidatePath(aCustomerPath);
 
             try
             {
                 var aCustomerList = File.ReadAllText(aCustomerPath);
-                var aPriceList = File.ReadAllText(aPrivePath);
+                var aPriceListB2C = File.ReadAllText(aPricePathB2C);
+                var aPriceListB2B = File.ReadAllText(aPricePathB2B);
 
-                List<ProductObject>? ProductList = JsonConvert.DeserializeObject<List<ProductObject>>(aPriceList, JsonSerializerSettings);
+                List<ProductObject>? ProductListB2C = JsonConvert.DeserializeObject<List<ProductObject>>(aPriceListB2C, JsonSerializerSettings);
+                List<ProductObject>? ProductListB2B = JsonConvert.DeserializeObject<List<ProductObject>>(aPriceListB2B, JsonSerializerSettings);
 
-                if (ProductList != null)
+                if (ProductListB2C != null && ProductListB2B != null)
                 {
-                    ObjectManager.AddProductList(ProductList);
+                    ObjectManager.AddProductList(ProductListB2C, BusinessRelation.B2C);
+                    ObjectManager.AddProductList(ProductListB2B, BusinessRelation.B2B);
                 }
                 else
                 {
@@ -275,7 +282,7 @@ namespace Accountant
             btnAddCustomer.Enabled = false;
             cbCustomer.Enabled = false;
 
-            var aSetting = new SettingForm(ObjectManager.GetProductList());
+            var aSetting = new SettingForm();
 
             flpProductSelection.Size = new Size(aSetting.Width, aSetting.Height);
             flpProductSelection.Controls.Add(aSetting);
