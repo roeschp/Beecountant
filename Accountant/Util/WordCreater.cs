@@ -72,7 +72,9 @@ namespace Accountant.Util
 
                 double aTotal = Math.Round(tOrderObject.Price * Util.TaxesFactor, 2);
                 double aTaxes = Math.Round(aTotal - tOrderObject.Price, 2);
+                double aTaxValue = Math.Round(((Util.TaxesFactor - 1) * 100), 2);
 
+                SearchReplace("cTaxValue", $"{aTaxValue}%");
                 SearchReplace("cNoTaxes", $"{tOrderObject.Price}€");
                 SearchReplace("cTaxes", $"{aTaxes}€");
                 SearchReplace("cTotal", $"{aTotal}€");

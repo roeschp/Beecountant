@@ -182,6 +182,14 @@ namespace Accountant
                 flpProductSelection.Size = size;
 
                 flpProductSelection.Controls.Remove(tControl);
+                try
+                {
+                    ProductObjectList.Remove((ufProductSelection)tControl);
+                }
+                catch
+                {
+                    // just do nothing
+                }
 
                 if(flpProductSelection.Controls.Count <= 0)
                 {
