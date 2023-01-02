@@ -157,6 +157,7 @@ namespace Accountant
         {
             btnAddCustomer.Enabled = true;
             btnAddProduct.Enabled = true;
+            btnSettings.Enabled = true;
             cbCustomer.Enabled = true;
             gpCustomer.Visible = true;
 
@@ -281,6 +282,7 @@ namespace Accountant
             flpProductSelection.Show();
             btnAddCustomer.Enabled = false;
             btnAddProduct.Enabled = false;
+            btnSettings.Enabled = false;
             cbCustomer.Enabled = false;
         }
 
