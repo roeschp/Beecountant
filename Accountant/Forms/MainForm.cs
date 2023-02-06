@@ -288,6 +288,17 @@ namespace Accountant
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
+            var aControls = flpProductSelection.Controls;
+
+            foreach(var aControl in aControls )
+            {
+                if(aControl.GetType() == typeof(SettingForm))
+                {
+                    CustomerInputDone((Control) aControl);
+                    return;
+                }
+            }
+
             btnAddProduct.Enabled = false;
             btnAddCustomer.Enabled = false;
             cbCustomer.Enabled = false;

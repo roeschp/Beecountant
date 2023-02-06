@@ -13,7 +13,7 @@ namespace Accountant.Util
         private const string TemplateFolder = "Template";
         private const string InvoiceFolder = "Invoices";
         private const string DocumentFolder = "Documents";
-        private static object TemplatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), TemplateFolder, TemplateFile);
+        private static object TemplatePath = Path.Combine(Environment.CurrentDirectory, TemplateFolder, TemplateFile);
 
         private static object mMissing = Missing.Value;
         private static Word.Application? aWord ;
@@ -79,9 +79,9 @@ namespace Accountant.Util
                 SearchReplace("cTaxes", $"{aTaxes}€");
                 SearchReplace("cTotal", $"{aTotal}€");
                
-                document.SaveAs(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, DocumentFolder, tOrderObject.Id + ".docx"));
+                document.SaveAs(Path.Combine(Environment.CurrentDirectory, InvoiceFolder, DocumentFolder, tOrderObject.Id + ".docx"));
                 Thread.Sleep(5000);
-                document.SaveAs(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf"), WdSaveFormat.wdFormatPDF);
+                document.SaveAs(Path.Combine(Environment.CurrentDirectory, InvoiceFolder, tOrderObject.Id + ".pdf"), WdSaveFormat.wdFormatPDF);
                 Thread.Sleep(5000);
                 aWord.Quit();
             }
@@ -97,23 +97,26 @@ namespace Accountant.Util
                 CreateNoWindow = true,
                 Verb = "print",
                 FileName = "explorer",
-                Arguments = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), InvoiceFolder, tOrderObject.Id + ".pdf" )
+                Arguments = Path.Combine(Environment.CurrentDirectory, InvoiceFolder, tOrderObject.Id + ".pdf" )
             };
             aProcess.Start();            
         }
 
         private static void SearchReplace(string tFind, string tReplace)
         {
-            Word.Find findObject = document.Application.Selection.Find;
-            findObject.ClearFormatting();
-            findObject.Text = tFind;
-            findObject.Replacement.ClearFormatting();
-            findObject.Replacement.Text = tReplace;
+            if (document != null)
+            {
+                Word.Find findObject = document.Application.Selection.Find;
+                findObject.ClearFormatting();
+                findObject.Text = tFind;
+                findObject.Replacement.ClearFormatting();
+                findObject.Replacement.Text = tReplace;
 
-            object replaceAll = Word.WdReplace.wdReplaceAll;
-            findObject.Execute(ref mMissing, ref mMissing, ref mMissing, ref mMissing, ref mMissing,
-        ref mMissing, ref mMissing, ref mMissing, ref mMissing, ref mMissing,
-        ref replaceAll, ref mMissing, ref mMissing, ref mMissing, ref mMissing);
+                object replaceAll = Word.WdReplace.wdReplaceAll;
+                findObject.Execute(ref mMissing, ref mMissing, ref mMissing, ref mMissing, ref mMissing,
+            ref mMissing, ref mMissing, ref mMissing, ref mMissing, ref mMissing,
+            ref replaceAll, ref mMissing, ref mMissing, ref mMissing, ref mMissing);
+            }
         }
     }
 }

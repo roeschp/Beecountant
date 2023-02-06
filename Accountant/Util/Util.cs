@@ -12,7 +12,7 @@ namespace Accountant.Util
 
         public static double TaxesFactor = 1.095;
 
-        public static string PathExecutable = Path.GetDirectoryName(Application.ExecutablePath);
+        public static string PathExecutable = Environment.CurrentDirectory;
 
         public static T DeepCopy<T>(T item)
         {

@@ -13,6 +13,10 @@ namespace Accountant.Forms
         {
             InitializeComponent();
 
+            products = new List<ProductObject>();
+            productBackup = new List<ProductObject>();
+
+
             var aTaxes = Math.Round((Util.Util.TaxesFactor - 1) * 100, 2);
             txtTaxes.Text = aTaxes.ToString();
 
@@ -44,8 +48,8 @@ namespace Accountant.Forms
             if (products != null)
             {
                 txtPrice.Text = tProduct.SinglePrice.ToString();
-                txtCapacity.Text = tProduct.Weight.ToString();
-                txtUnit.Text = tProduct.Unit.ToString();
+                txtCapacity.Text = tProduct?.Weight?.ToString();
+                txtUnit.Text = tProduct?.Unit?.ToString();
             }
         }
 
@@ -76,11 +80,14 @@ namespace Accountant.Forms
                 {
                     var aChangeBack = products.Find(c => c.Name == aBackup.Name && c.Weight == aBackup.Weight);
 
-                    DialogResult aResult = MessageBox.Show($"Möchtest du wirklich das Produkt \'{aChangeBack.Name}\' ändern auf \'{aChangeBack.SinglePrice}€\'?", "Preisänderung", MessageBoxButtons.YesNo);
-
-                    if (aResult == DialogResult.No)
+                    if (aChangeBack != null)
                     {
-                        aChangeBack.SinglePrice = aBackup.SinglePrice;
+                        DialogResult aResult = MessageBox.Show($"Möchtest du wirklich das Produkt \'{aChangeBack?.Name}\' ändern auf \'{aChangeBack?.SinglePrice}€\'?", "Preisänderung", MessageBoxButtons.YesNo);
+
+                        if (aResult == DialogResult.No)
+                        {
+                            aChangeBack.SinglePrice = aBackup.SinglePrice;
+                        }
                     }
                 }
 
